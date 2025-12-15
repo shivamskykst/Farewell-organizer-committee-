@@ -6,145 +6,295 @@
 <title>Farewell Invitation</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{min-height:100vh;overflow:hidden;background:#000}
+body{background:#000;color:#fff}
 
-/* 🌙 Music reactive glow */
-#musicGlow{
-  position:fixed;
-  inset:-20%;
-  background:radial-gradient(circle at center,
-    rgba(150,120,255,0.18),
-    rgba(10,12,25,0.9) 70%);
-  filter:blur(90px);
-  opacity:.45;
-  z-index:-2;
-  transition:opacity .2s ease;
-}
-
-/* vignette */
-body::after{
-  content:"";
+/* ================= WELCOME PAGE ================= */
+.welcome-page{
   position:fixed;
   inset:0;
-  background:radial-gradient(circle at center, transparent 55%, rgba(0,0,0,.55) 100%);
-  pointer-events:none;
-  z-index:-1;
-}
-
-/* LOGIN */
-.login-page{
-  height:100vh;display:flex;justify-content:center;align-items:center;
-  background:linear-gradient(270deg,#ffb6c1,#87ceeb);
-  background-size:400% 400%;
-  animation:bg 8s infinite;
-}
-@keyframes bg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
-
-.login-card{
-  background:rgba(255,255,255,.25);
-  backdrop-filter:blur(14px);
-  padding:30px;width:300px;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 15px 30px rgba(0,0,0,.3)
-}
-.login-card h2,.login-card p{color:#fff}
-.login-card input{width:100%;padding:10px;margin:8px 0;border:0;border-radius:8px}
-.login-card button{width:100%;padding:10px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}
-.error{color:#fff;margin-top:10px;display:none}
-
-/* TRANSITION */
-.transition{
-  display:none;height:100vh;
-  background:#f0e13a;
+  z-index:20;
+  display:flex;
   justify-content:center;
   align-items:center;
+  overflow:hidden;
+}
+.welcome-page video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.welcome-page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  pointer-events:none;
+}
+.welcome-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+}
+.welcome-content h1{
+  font-size:3.2rem;
+  letter-spacing:6px;
+  text-shadow:0 0 50px rgba(255,255,255,.7);
+  margin-bottom:50px;
+}
+
+/* 🌟 PREMIUM CIRCULAR BUTTON */
+.enter-btn{
+  position:relative;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(12px);
+  color:#fff;
+  font-size:2.2rem;
+  box-shadow:
+    0 0 40px rgba(200,160,255,.8),
+    inset 0 0 20px rgba(255,255,255,.25);
+}
+.enter-btn::before{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  background:conic-gradient(#caa7ff,#6c4cff,#caa7ff);
+  animation:spin 4s linear infinite;
+  z-index:-1;
+}
+.enter-btn:hover{
+  transform:scale(1.08);
+}
+.enter-btn:active{
+  transform:scale(.95);
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* ================= LOGIN ================= */
+.login-page{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:15;
+}
+.login-page video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.login-page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  pointer-events:none;
+}
+.login-card{
+  position:relative;
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(14px);
+  padding:30px;
+  width:300px;
+  border-radius:18px;
+  text-align:center;
+}
+.login-card input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:0;
+  border-radius:8px;
+}
+.login-card button{
+  width:100%;
+  padding:10px;
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+}
+.error{display:none;margin-top:10px;color:#ff6961}
+
+/* ================= TRANSITION ================= */
+.transition{
+  display:none;
+  position:fixed;
+  inset:0;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+.transition video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.transition::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  pointer-events:none;
+}
+.transition-content{
+  position:relative;
   text-align:center;
 }
 #startBtn{
-  padding:12px 30px;
+  margin-top:20px;
+  padding:12px 34px;
   border-radius:25px;
-  border:0;
+  border:none;
   cursor:pointer;
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
 .main-page{
   display:none;
   min-height:100vh;
-  overflow-y:auto;
-  padding:50px 20px;
+}
+.main-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+.main-page::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:-1;
+  pointer-events:none;
+}
+.content{
+  padding:40px 20px;
   text-align:center;
-  color:#f5f7fa;
 }
 
-/* music icon */
-.music{position:fixed;top:15px;right:15px;font-size:24px;cursor:pointer}
-.music.playing{animation:glow 2s infinite}
-@keyframes glow{
-  0%,100%{text-shadow:0 0 6px #caa7ff}
-  50%{text-shadow:0 0 20px #a682ff}
+/* Countdown */
+#timer{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
 }
-
-/* invitation */
-.invitation-card{
-  max-width:720px;
-  margin:80px auto;
-  border-radius:26px;
-  overflow:hidden;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
+.time-box{
+  width:110px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 25px rgba(200,160,255,.4);
 }
-.invitation-card img{width:100%;opacity:.9}
-
-/* info cards */
-.info-card{
-  margin:50px auto;
-  max-width:520px;
-  padding:28px;
-  border-radius:24px;
-  background:linear-gradient(135deg,rgba(170,120,255,0.28),rgba(120,90,220,0.18));
-  backdrop-filter:blur(20px);
-  box-shadow:0 0 30px rgba(180,130,255,.35);
+.time-box span{
+  font-size:2.2rem;
+  font-weight:700;
 }
+.time-box small{opacity:.8}
 
-#timer span{display:inline-block;margin:8px 12px;font-size:1.1rem}
-
-/* 🎯 Google Map Button Style */
-.info-card button{
-  margin-top:14px;
-  padding:12px 26px;
-  border-radius:22px;
-  border:none;
-  background:linear-gradient(135deg,#caa7ff,#8c6cff);
+/* Invitation Box */
+.invitation-box{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  margin-bottom:40px;
   color:#fff;
-  font-size:0.95rem;
-  cursor:pointer;
-  box-shadow:0 0 15px rgba(190,140,255,.6);
+  box-shadow:0 0 30px rgba(200,160,255,.4);
 }
-.info-card button:hover{
-  transform:scale(1.05);
+.invitation-box h1{
+  font-size:3rem;
+  margin-bottom:20px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+.invitation-box h2{
+  font-size:1.2rem;
+  line-height:1.5;
+  margin-bottom:20px;
+}
+.map-btn{
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  color:#fff;
+  font-weight:600;
+  box-shadow:0 0 20px rgba(200,160,255,.5);
+}
+.map-btn:hover{
+  background:rgba(255,255,255,0.35);
 }
 
-.address{
-  margin-top:12px;
-  font-size:.9rem;
-  opacity:.8;
+/* Contact Box */
+.contact-box{
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  margin-top:30px;
+  color:#fff;
+  box-shadow:0 0 20px rgba(200,160,255,.3);
+}
+.contact-box h2{
+  font-size:1.3rem;
+  margin-bottom:10px;
+}
+.contact-box a{
+  color:#fff;
+  text-decoration:underline;
+  font-weight:600;
+}
+.contact-box a:hover{
+  color:#caa7ff;
 }
 </style>
 </head>
 
 <body>
 
-<div id="musicGlow"></div>
+<audio id="globalMusic" src="music1.mp3" loop></audio>
+
+<!-- WELCOME -->
+<div class="welcome-page" id="welcomePage">
+  <video autoplay muted loop playsinline poster="poster1.jpg">
+    <source src="video4.mp4" type="video/mp4">
+  </video>
+  <div class="welcome-content">
+    <h1>WELCOME XAVERIAN’S</h1>
+    <button class="enter-btn" aria-label="Enter Site" onclick="enterSite()">▶</button>
+  </div>
+</div>
 
 <!-- LOGIN -->
 <div class="login-page" id="loginPage">
+  <video autoplay muted loop playsinline poster="poster2.jpg">
+    <source src="video1.mp4" type="video/mp4">
+  </video>
   <div class="login-card">
     <h2>🔒 Memory Lock</h2>
-    <p>Only those who shared this journey can enter…</p>
     <input id="username" placeholder="Name">
     <input id="password" type="password" placeholder="Secret Code">
     <button onclick="login()">Unlock</button>
@@ -154,87 +304,128 @@ body::after{
 
 <!-- TRANSITION -->
 <div class="transition" id="transition">
-  <div>
+  <video autoplay muted loop playsinline poster="poster3.jpg">
+    <source src="video2.mp4" type="video/mp4">
+  </video>
+  <div class="transition-content">
     <h1 id="welcomeText"></h1>
-    <button id="startBtn">▶ Start the Journey</button>
+    <button id="startBtn">Start the Journey</button>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main-page" id="mainPage">
-  <div class="music" id="musicBtn" onclick="toggleMusic()">🎶</div>
-  <audio id="bgMusic" src="interstellar.mp3" loop></audio>
+  <video class="main-video" autoplay muted loop playsinline poster="poster4.jpg">
+    <source src="video3.mp4" type="video/mp4">
+  </video>
 
-  <div class="invitation-card">
-    <img src="invitation-bg.jpg">
-  </div>
+  <div class="content">
+    <!-- Invitation Section -->
+    <div class="invitation-box">
+      <h1>You Are Invited</h1>
+      <h2>
+        Not every goodbye needs words; some need memories.<br>
+        Let's gather one last time to relive laughter, friendships, and moments that made our school journey unforgettable.<br>
+        No rules. No uniforms.<br>
+        Just hearts full of memories.
+      </h2>
+      <p><strong>Date:</strong> 10 Jan 2026, 10:00 AM</p>
+      <p><strong>Location:</strong> Amar Resort, Motihari</p>
+      <button class="map-btn" onclick="openMap()">View Location</button>
+    </div>
 
-  <div class="info-card">
+    <!-- Countdown -->
     <h2>⏳ Farewell Begins In</h2>
     <div id="timer"></div>
-  </div>
 
-  <div class="info-card">
-    <h2>🗓️ When</h2>
-    <p>10 January · 10:00 AM</p>
+    <!-- Contact Email -->
+    <div class="contact-box">
+      <h2>For any queries, contact:</h2>
+      <p><a href="mailto:yshivamkumar212@gmail.com">yshivamkumar212@gmail.com</a></p>
+    </div>
   </div>
-
-  <div class="info-card">
-    <h2>📍 Where</h2>
-    <button onclick="openGoogleMap()">Open Google Map</button>
-    <div class="address">📌 Amar Resort, Motihari</div>
-  </div>
-
-  <footer style="margin:80px 0;opacity:.7">
-    Contact:
-    <a href="mailto:yshivamkumar212@gmail.com" style="color:#caa7ff">
-      yshivamkumar212@gmail.com
-    </a>
-  </footer>
 </div>
 
 <script>
-const allowedUsers=["Shivam","Ayush Mehta","Pranjal","Shreyansh","Kunj","Abhigyan","Mahi","Rishav"];
-const correctPass="lencho";
+const allowedUsers = ["Shivam","Ayush Mehta","Pranjal","Shreyansh","Kunj"];
+const correctPass = "lencho";
+const music = document.getElementById("globalMusic");
 
+// Elements
+const welcomePage = document.getElementById("welcomePage");
+const loginPage = document.getElementById("loginPage");
+const transition = document.getElementById("transition");
+const mainPage = document.getElementById("mainPage");
+const welcomeText = document.getElementById("welcomeText");
+const startBtn = document.getElementById("startBtn");
+const timer = document.getElementById("timer");
+const error = document.getElementById("error");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+
+let countdownInterval;
+
+/* Welcome → Login */
+function enterSite(){
+  music.volume = 0.6;
+  music.play().catch(()=>{});
+  welcomePage.style.display = "none";
+  loginPage.style.display = "flex";
+}
+
+/* Login Function */
 function login(){
-if(allowedUsers.includes(username.value.trim()) && password.value===correctPass){
-  loginPage.style.display="none";
-  transition.style.display="flex";
-  welcomeText.innerText=`Welcome ${username.value.trim()}, to the Last Chapter of Our School Life`;
-} else error.style.display="block";
+  const usernameVal = usernameInput.value.trim().toLowerCase();
+  const passwordVal = passwordInput.value;
+
+  if(allowedUsers.some(u => u.toLowerCase() === usernameVal) && passwordVal === correctPass){
+    loginPage.style.display = "none";
+    transition.style.display = "flex";
+    welcomeText.innerText = `Welcome ${usernameInput.value.trim()}`;
+    error.style.display = "none";
+  } else {
+    error.style.display = "block";
+  }
 }
 
-startBtn.onclick=()=>{
-transition.style.display="none";
-mainPage.style.display="block";
-document.body.style.overflow="auto";
-bgMusic.play();
-startCountdown();
-}
+// Hide error when typing
+[usernameInput, passwordInput].forEach(i => i.addEventListener("input",()=>error.style.display="none"));
 
-function toggleMusic(){
-bgMusic.paused?bgMusic.play():bgMusic.pause();
-}
+// Login on Enter key
+[usernameInput, passwordInput].forEach(i => i.addEventListener("keydown", e => {if(e.key==="Enter") login();}));
 
+/* Transition → Main */
+startBtn.onclick = () => {
+  transition.remove();
+  mainPage.style.display = "block";
+  startCountdown();
+};
+
+/* Countdown */
 function startCountdown(){
-const target=new Date("Jan 10, 2026 18:00").getTime();
-setInterval(()=>{
-  const d=target-new Date().getTime();
-  timer.innerHTML=
-   `<span>${Math.floor(d/86400000)} Days</span>
-    <span>${Math.floor(d/3600000)%24} Hours</span>
-    <span>${Math.floor(d/60000)%60} Min</span>
-    <span>${Math.floor(d/1000)%60} Sec</span>`;
-},1000);
+  const target = new Date("Jan 10, 2026 10:00").getTime();
+  if(countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = setInterval(()=>{
+    const d = target - Date.now();
+    if(d <= 0){
+      clearInterval(countdownInterval);
+      timer.innerHTML = `<div class="time-box"><span>0</span><small>DAYS</small></div>
+                         <div class="time-box"><span>0</span><small>HOURS</small></div>
+                         <div class="time-box"><span>0</span><small>MIN</small></div>
+                         <div class="time-box"><span>0</span><small>SEC</small></div>`;
+      return;
+    }
+    timer.innerHTML = `
+      <div class="time-box"><span>${Math.floor(d/86400000)}</span><small>DAYS</small></div>
+      <div class="time-box"><span>${Math.floor(d/3600000)%24}</span><small>HOURS</small></div>
+      <div class="time-box"><span>${Math.floor(d/60000)%60}</span><small>MIN</small></div>
+      <div class="time-box"><span>${Math.floor(d/1000)%60}</span><small>SEC</small></div>`;
+  }, 1000);
 }
 
-/* ✅ GUARANTEED MAP */
-function openGoogleMap(){
-window.open(
-  "https://www.google.com/maps/search/?api=1&query=Amar+Resort+Motihari",
-  "_blank"
-);
+/* Open Map */
+function openMap(){
+  window.open("https://www.google.com/maps/search/?api=1&query=Amar+Resort+Motihari", "_blank");
 }
 </script>
 
