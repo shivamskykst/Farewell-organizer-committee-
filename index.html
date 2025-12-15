@@ -1,0 +1,344 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farewell Invitation</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{min-height:100vh;overflow:hidden;background:#000}
+
+/* 🌙 Music reactive glow */
+#musicGlow{
+  position:fixed;
+  inset:-20%;
+  background:radial-gradient(circle at center,
+    rgba(150,120,255,0.18),
+    rgba(10,12,25,0.9) 70%);
+  filter:blur(90px);
+  opacity:.45;
+  z-index:-2;
+  transition:opacity .2s ease;
+}
+
+/* cinematic vignette */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center, transparent 55%, rgba(0,0,0,.55) 100%);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* ========== LOGIN PAGE ========== */
+.login-page{
+  height:100vh;display:flex;justify-content:center;align-items:center;
+  background:linear-gradient(270deg,#ffb6c1,#87ceeb);
+  background-size:400% 400%;
+  animation:bg 8s infinite;
+}
+@keyframes bg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+
+.login-card{
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(14px);
+  padding:30px;width:300px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,.3)
+}
+.login-card h2,.login-card p{color:#fff}
+.login-card input{width:100%;padding:10px;margin:8px 0;border:0;border-radius:8px}
+.login-card button{width:100%;padding:10px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}
+.error{color:#fff;margin-top:10px;display:none}
+
+/* ========== TRANSITION ========== */
+.transition{
+  display:none;height:100vh;
+  background:#ede154;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+#startBtn{
+  padding:12px 30px;
+  border-radius:25px;
+  border:0;
+  cursor:pointer;
+}
+
+/* ========== MAIN PAGE ========== */
+.main-page{
+  display:none;
+  min-height:100vh;
+  overflow-y:auto;
+  padding:50px 20px;
+  text-align:center;
+  color:#f5f7fa;
+}
+
+/* 🎶 music icon */
+.music{position:fixed;top:15px;right:15px;font-size:24px;cursor:pointer}
+.music.playing{animation:glow 2s infinite}
+@keyframes glow{
+  0%,100%{text-shadow:0 0 6px #caa7ff}
+  50%{text-shadow:0 0 20px #a682ff}
+}
+
+/* 📜 Invitation card */
+.invitation-card{
+  position:relative;
+  max-width:720px;
+  margin:80px auto;
+  border-radius:26px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  animation:fadeUp 1.4s ease;
+}
+.invitation-card img{width:100%;display:block;opacity:.9}
+
+@keyframes fadeUp{
+  from{transform:translateY(60px) scale(.96);opacity:0}
+  to{transform:none;opacity:1}
+}
+
+/* 🔮 NEON INFO CARDS (UPGRADED) */
+.info-card{
+  position:relative;
+  margin:50px auto;
+  max-width:520px;
+  padding:28px;
+  border-radius:24px;
+
+  background:linear-gradient(
+    135deg,
+    rgba(170,120,255,0.28),
+    rgba(120,90,220,0.18)
+  );
+
+  backdrop-filter:blur(20px);
+  box-shadow:
+    0 0 30px rgba(180,130,255,.35),
+    inset 0 0 25px rgba(255,255,255,.08);
+
+  overflow:hidden;
+  transition:transform .4s ease;
+}
+
+.info-card:hover{
+  transform:translateY(-6px) scale(1.01);
+}
+
+/* 🌈 moving border light */
+.info-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  padding:2px;
+
+  background:linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(210,170,255,.9),
+    transparent 80%
+  );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+
+  animation:borderMove 4s linear infinite;
+}
+
+@keyframes borderMove{
+  from{background-position:0%}
+  to{background-position:200%}
+}
+
+/* 💜 ambient glow pulse */
+.info-card::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:radial-gradient(circle,
+    rgba(190,140,255,.25),
+    transparent 60%);
+  filter:blur(60px);
+  opacity:.35;
+  animation:glowPulse 6s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes glowPulse{
+  0%,100%{opacity:.25}
+  50%{opacity:.5}
+}
+
+#timer span{display:inline-block;margin:8px 12px;font-size:1.1rem}
+
+/* Map popup */
+.map-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center}
+.map-box{width:90%;max-width:500px;background:#fff;border-radius:15px;overflow:hidden}
+.map-box iframe{width:100%;height:300px;border:0}
+
+/* Smoke */
+.smoke{
+  position:fixed;
+  bottom:-50px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(255,255,255,.35),transparent 70%);
+  filter:blur(30px);
+  animation:smokeMove 18s linear infinite;
+  pointer-events:none;
+}
+@keyframes smokeMove{
+  from{transform:translateY(0);opacity:.4}
+  to{transform:translateY(-120vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div id="musicGlow"></div>
+
+<div class="smoke" style="left:15%"></div>
+<div class="smoke" style="left:50%;animation-delay:6s"></div>
+<div class="smoke" style="left:80%;animation-delay:12s"></div>
+
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+  <div class="login-card">
+    <h2>🔒 Memory Lock</h2>
+    <p>Only those who shared this journey can enter…</p>
+    <input id="username" placeholder="Name">
+    <input id="password" type="password" placeholder="Secret Code">
+    <button onclick="login()">Unlock</button>
+    <div class="error" id="error">Access denied</div>
+  </div>
+</div>
+
+<!-- TRANSITION -->
+<div class="transition" id="transition">
+  <div>
+    <h1 id="welcomeText"></h1>
+    <button id="startBtn">▶ Start the Journey</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-page" id="mainPage">
+  <div class="music" id="musicBtn" onclick="toggleMusic()">🎶</div>
+  <audio id="bgMusic" src="interstellar.mp3" loop></audio>
+
+  <div class="invitation-card">
+    <img src="invitation-bg.jpg">
+  </div>
+
+  <div class="info-card">
+    <h2>⏳ Farewell Begins In</h2>
+    <div id="timer"></div>
+  </div>
+
+  <div class="info-card">
+    <h2>🗓️ When</h2>
+    <p>10 January · 10:00 AM</p>
+  </div>
+
+  <div class="info-card">
+    <h2>📍 Where</h2>
+    <button onclick="openMap()">Open Google Map</button>
+  </div>
+
+  <footer style="margin:80px 0;opacity:.7">
+    Contact:
+    <a href="mailto:yshivamkumar212@gmail.com" style="color:#caa7ff;text-decoration:none">
+      yshivamkumar212@gmail.com
+    </a>
+  </footer>
+</div>
+
+<div class="map-popup" id="mapPopup" onclick="closeMap()">
+  <div class="map-box" onclick="event.stopPropagation()">
+    <iframe src="https://www.google.com/maps?q=Amar%20Resort%20Motihari&output=embed"></iframe>
+  </div>
+</div>
+
+<script>
+const allowedUsers=["Shivam","Ayush Mehta","Pranjal","Shreyansh","Kunj"];
+const correctPass="lencho";
+let audioCtx, analyser, dataArray;
+
+function login(){
+if(allowedUsers.includes(username.value.trim()) && password.value===correctPass){
+  loginPage.style.display="none";
+  transition.style.display="flex";
+  welcomeText.innerText=`Welcome ${username.value.trim()}, to the Last Chapter of Our School Life`;
+} else error.style.display="block";
+}
+
+startBtn.onclick=()=>{
+transition.style.display="none";
+mainPage.style.display="block";
+document.body.style.overflow="auto";
+bgMusic.volume=0;
+bgMusic.play();
+fadeMusic();
+musicBtn.classList.add('playing');
+startCountdown();
+startMusicGlow();
+}
+
+function fadeMusic(){
+let v=0;
+const f=setInterval(()=>{
+  v+=0.02;
+  bgMusic.volume=Math.min(v,0.6);
+  if(v>=0.6) clearInterval(f);
+},120);
+}
+
+function toggleMusic(){bgMusic.paused?bgMusic.play():bgMusic.pause()}
+
+function startCountdown(){
+const target=new Date("Jan 10, 2026 18:00").getTime();
+setInterval(()=>{
+  const d=target-new Date().getTime();
+  timer.innerHTML=
+   `<span>${Math.floor(d/86400000)} Days</span>
+    <span>${Math.floor(d/3600000)%24} Hours</span>
+    <span>${Math.floor(d/60000)%60} Min</span>
+    <span>${Math.floor(d/1000)%60} Sec</span>`;
+},1000);
+}
+
+function openMap(){mapPopup.style.display="flex"}
+function closeMap(){mapPopup.style.display="none"}
+
+function startMusicGlow(){
+audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+const src=audioCtx.createMediaElementSource(bgMusic);
+analyser=audioCtx.createAnalyser();
+analyser.fftSize=256;
+dataArray=new Uint8Array(analyser.frequencyBinCount);
+src.connect(analyser);
+analyser.connect(audioCtx.destination);
+animateGlow();
+}
+function animateGlow(){
+requestAnimationFrame(animateGlow);
+analyser.getByteFrequencyData(dataArray);
+let avg=dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
+musicGlow.style.opacity=0.35+avg/400;
+}
+</script>
+
+</body>
+</html>
