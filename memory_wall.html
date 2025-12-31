@@ -920,8 +920,19 @@
                     caption: 'A special note for everyone.',
                     public_id: 'pinned_note' // Special ID
                 };
+
+                // Pinned Memory (Note 1)
+                const pinnedNote1 = {
+                    src: 'note1.jpeg',
+                    fullSrc: 'note1.jpeg',
+                    timestamp: Date.now(), // Always "fresh"
+                    owner: 'Admin',
+                    caption: 'A special note for everyone.',
+                    public_id: 'pinned_note1' // Special ID
+                };
                 
-                // Prepend
+                // Prepend pinned notes (note1 first, then note, so they appear in order)
+                validPhotos.unshift(pinnedNote1);
                 validPhotos.unshift(pinnedNote);
 
                 // Filter out hidden images (deleted by admin)
